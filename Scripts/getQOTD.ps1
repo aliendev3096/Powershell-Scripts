@@ -18,7 +18,7 @@ Function Get-Quote()
 
   if (!(Test-Path $path))
   {
-     New-Item -path "C:\Users\{Username}\Desktop\scripts\quotes\Quotes.txt" -name .txt -type "file" -value $quote
+     New-Item -path $path -name .txt -type "file" -value $quote
      Write-Host "Created new file and text content added"
   }
   else
