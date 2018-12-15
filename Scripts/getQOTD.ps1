@@ -1,4 +1,8 @@
 
+ param (
+    [Parameter(Mandatory=$true)]
+	[string]$path
+ )
 
 Function Get-Quote()
 {
@@ -12,22 +16,22 @@ Function Get-Quote()
   $cache.Quote += "`n"
   $cache.Quote += "`n"
 
-  if (!(Test-Path "C:\Users/Jeff Vang\Desktop\scripts\quotes\Quotes.txt"))
+  if (!(Test-Path $path))
   {
-     New-Item -path "C:\Users/Jeff Vang\Desktop\scripts\quotes\Quotes.txt" -name .txt -type "file" -value $quote
+     New-Item -path "C:\Users\{Username}\Desktop\scripts\quotes\Quotes.txt" -name .txt -type "file" -value $quote
      Write-Host "Created new file and text content added"
   }
   else
   {
     $date = Get-Date -Format g
-    Add-Content -path "C:\Users/Jeff Vang\Desktop\scripts\quotes\Quotes.txt" -value $quote.quote
-	Add-Content -path "C:\Users/Jeff Vang\Desktop\scripts\quotes\Quotes.txt" -value $quote.author
-	Add-Content -path "C:\Users/Jeff Vang\Desktop\scripts\quotes\Quotes.txt" -value $quote.cat
-	Add-Content -path "C:\Users/Jeff Vang\Desktop\scripts\quotes\Quotes.txt" -value $date
+    Add-Content -path $path -value $quote.quote
+	Add-Content -path $path -value $quote.author
+	Add-Content -path $path -value $quote.cat
+	Add-Content -path $path -value $date
     Write-Host "File already exists and new text content added"
 	
 	$wshell = New-Object -ComObject Wscript.Shell
-    $wshell.Popup($cache.Quote + "Old Quotes available in C:\Users/Jeff Vang\Desktop\scripts\quotes\Quotes.txt", 30," Quote of the Day", 0)
+    $wshell.Popup($cache.Quote + $path, 30," Quote of the Day", 0)
 	
   }
 
@@ -35,4 +39,4 @@ Function Get-Quote()
   
 }
 
-Get-Quote
+Get-Quote -path $path
